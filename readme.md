@@ -29,11 +29,13 @@ rodar o sql bloguplexis/public/assets/database.sql
 ## Exemplo de uso
 
 Depois de baixar todos os arquivos do github, acesse pelo 'CMD' o diretorio onde ficaram os arquivos.
-_Exemplo: cd\bloguplexis
 
-Então digite 'php artisan serve' e tecle <ENTER>
+_Exemplo: cd\bloguplexis_
+
+Então digite 'php artisan serve' e tecle ENTER
 
 Pronto. Agora acessar via browser a URL http://localhost:8000/usuario/index
+
 _Para login e senha utilize 'admin' para ambos os campos._ 
 
 ## Histórico de lançamentos
