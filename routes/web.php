@@ -11,5 +11,11 @@
 |
 */
 
-Route::resource('usuario', 'UsuarioController');
-Route::resource('artigo', 'ArtigoController');
+Route::get('usuario/index', 'UsuarioController@index');
+Route::post('usuario/login', 'UsuarioController@login');
+Route::get('usuario/sair', 'UsuarioController@sair');
+Route::get('artigo/index', 'ArtigoController@index');
+Route::get('artigo/sair', 'ArtigoController@sair');
+Route::post('artigo/buscar', 'ArtigoController@buscar');
+Route::get('artigo/listar', 'ArtigoController@listar');
+Route::get('artigo/excluir/{id}', 'ArtigoController@excluir');

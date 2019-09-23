@@ -4,82 +4,68 @@ namespace App\Http\Controllers;
 
 use App\Usuario;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
 
 class UsuarioController extends Controller
 {
+	public $hash_senha = '-!2019_BlogUpLexis_BrunoNogueira-*';
     /**
-     * Display a listing of the resource.
+     * Mosatra a p´gina inicial de login no sistema.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        //
-    }
+		session_start();
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+		if(!isset($_SESSION['usuario']['id']) || empty($_SESSION['usuario']['id'])) {
+			return view('usuario.login');
+		} else {
+			//return redirect()->route('artigo.index');
+			return redirect()->to('artigo/index');
+		}
     }
-
-    /**
-     * Store a newly created resource in storage.
+	
+	/**
+     * Login no sistema.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function login(Request $request)
     {
         //
+		if(isset($_POST['usuario']) && !empty($_POST['usuario']) && isset($_POST['senha']) && !empty($_POST['senha'])) {
+			$usuario = $_POST['usuario'];
+			$senha = md5($_POST['senha'].$this->hash_senha);
+			$sql = DB::table('usuario')->where([
+				['usuario', '=', $usuario]
+				,['senha', '=', $senha]
+			//])->toSql();
+			])->get();
+			if($sql->isEmpty()) {
+				return redirect()->to('usuario/index')->with('fail', 'Usuário ou Senha incorretos');
+			} else {
+				session_start();
+				$_SESSION['usuario']['id'] = $sql[0]->id;
+				$_SESSION['usuario']['usuario'] = $sql[0]->usuario;
+				return redirect()->to('usuario/index');
+			}
+		} else {
+			return redirect()->to('usuario/index')->with('fail', 'Os campos Usuário e/ou Senha não foram preenchidos');
+		}
     }
-
-    /**
-     * Display the specified resource.
+	
+	/**
+     * Logout no sistema.
      *
-     * @param  \App\Usuario  $usuario
      * @return \Illuminate\Http\Response
      */
-    public function show(Usuario $usuario)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Usuario  $usuario
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Usuario $usuario)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Usuario  $usuario
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Usuario $usuario)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Usuario  $usuario
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Usuario $usuario)
-    {
-        //
-    }
+	public function sair()
+	{
+		session_start();
+		session_destroy();
+		return Redirect()->to('usuario/index');
+	}
 }
