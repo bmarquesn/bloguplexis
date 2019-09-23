@@ -58,8 +58,8 @@ Distribuído sob a licença MIT.
 
 1. Faça o _fork_ do projeto (<https://github.com/bmarquesn/bloguplexis/fork>)
 2. Crie uma _branch_ para sua modificação (`git checkout -b bloguplexis/test`)
-3. Faça o _commit_ (`git commit -am 'Add some test'`)
-4. _Push_ (`git push origin feature/test`)
+3. Faça o _commit_ (`git commit -am 'Fiz a alteração X'`)
+4. _Push_ (`git push origin bloguplexis/test`)
 5. Crie um novo _Pull Request_
 
 [npm-image]: https://img.shields.io/npm/v/datadog-metrics.svg?style=flat-square
